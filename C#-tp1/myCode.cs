@@ -63,24 +63,45 @@ class Program
     static void Main()
     {
         int[] nombres = new int[5];
+        bool nombrePairSaisi = false;
 
         Console.WriteLine("Veuillez saisir 5 nombres entiers :");
 
         for (int i = 0; i < nombres.Length; i++)
         {
             Console.Write($"Nombre {i + 1}: ");
-            nombres[i] = int.Parse(Console.ReadLine());
+            string input = Console.ReadLine();
+            if (int.TryParse(input, out int nombre))
+            {
+                nombres[i] = nombre;
+                if (nombre % 2 == 0)
+                {
+                    nombrePairSaisi = true;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Veuillez saisir un nombre entier. Réessayez.");
+                i--; // Décrémente i pour répéter la saisie du nombre
+            }
         }
 
-        Console.WriteLine("Les nombres pairs saisis sont :");
-
-        foreach (int nombre in nombres)
+        if (nombrePairSaisi)
         {
-            if (nombre % 2 == 0)
+            Console.WriteLine("Les nombres pairs saisis sont :");
+            foreach (int nombre in nombres)
             {
-                Console.WriteLine(nombre);
+                if (nombre % 2 == 0)
+                {
+                    Console.WriteLine(nombre);
+                }
             }
+        }
+        else
+        {
+            Console.WriteLine("Aucun nombre pair n'a été saisi.");
         }
     }
 }
+
 
